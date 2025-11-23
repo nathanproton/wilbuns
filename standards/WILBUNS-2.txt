@@ -1,0 +1,203 @@
+                    WILBUNS-2: Repository Structure Specification
+                   Project Morningside / Constance Architecture  
+                               Category: Standards Track
+                               Published: 22 November 2025
+
+
+Status of This Memo
+
+   This document defines the mandatory repository structure for all
+   Wilbuns-compliant specification repositories, including the root
+   repository located at https://github.com/nathanproton/wilbuns.  
+   Distribution of this memo is unlimited.
+
+Abstract
+
+   WILBUNS-2 establishes the normative directory layout, indexing rules,
+   and organizational structure for the Wilbuns specifications,
+   taxonomies, and schema catalogues. The purpose is to ensure long-term
+   maintainability, reference stability, and archival durability. As
+   with WILBUNS-1, this document reflects a deliberate fork in the road,
+   recognizing that structural decisions of this magnitude are difficult
+   to reverse, and attempting such reversals in the future may resemble
+   the functional challenges of running locomotives on broken track,
+   un-neutering a K9, or recovering spilt milk with one’s bare hands.
+
+1.  Introduction
+
+   The Wilbuns System consists of normative standards, schemas, and
+   controlled taxonomies that define the canonical vocabulary and
+   metadata architecture for Constance and GovSet. To ensure long-term
+   coherence, the Wilbuns repository SHALL follow a stable directory
+   structure. This structure provides clear separation of concerns:
+
+       (1) Standards documents  
+       (2) Machine-readable schemas  
+       (3) Domain-specific taxonomy registries  
+       (4) Governance and change-control materials  
+       (5) Implementation guides and examples (optional)
+
+   This document enumerates the required folders and their intended
+   roles. Conformance with this specification is REQUIRED for any
+   Wilbuns-compliant distribution.
+
+2.  Repository Overview
+
+   The top-level structure of the Wilbuns repository SHALL be as
+   follows:
+
+       /standards/  
+       /schemas/  
+       /taxonomies/  
+           index.json  
+           /<DOMAIN>/
+       /governance/  
+       /guides/  
+       /scripts/      
+       /examples/    
+
+   Each directory is described in detail in Sections 3 through 8.
+
+3.  /standards/ Directory
+
+3.1 Purpose
+
+   The /standards/ directory SHALL contain all normative specification
+   documents written in RFC-style text format. These documents are the
+   authoritative sources of truth for the Wilbuns System and SHALL NOT
+   contain application code, libraries, or implementation files.
+
+3.2 Contents
+
+   Example contents include:
+
+       WILBUNS-1.txt    (Domain Architecture)
+       WILBUNS-2.txt    (Repository Structure)
+       WILBUNS-3.txt    (Identifier Generation Rules)
+       WILBUNS-4.txt    (Record Envelope Binding)
+
+   Standards documents SHALL be immutable once published except for
+   errata.
+
+4.  /schemas/ Directory
+
+4.1 Purpose
+
+   The /schemas/ directory contains machine-readable specifications,
+   including JSON Schema files, API definitions, and envelope models.
+   These schemas define the structure and validation rules for Wilbuns
+   objects.
+
+4.2 Requirements
+
+   The directory SHALL contain:
+
+       - JSON Schemas for record envelopes
+       - Taxonomy schema definitions
+       - Namespace and ID schemas
+       - Ancillary validator files
+
+   Schemas SHALL NOT include runtime logic or executable code.
+
+5.  /taxonomies/ Directory
+
+5.1 Purpose
+
+   The /taxonomies/ directory SHALL contain the canonical taxonomy
+   registries for every domain defined in WILBUNS-1. This constitutes
+   the living vocabulary of the system.
+
+5.2 Structure
+
+   The required layout is:
+
+       /taxonomies/
+           index.json
+           /ENT/
+               ent.csv
+               ent.json
+               README.md
+           /TAX/
+               tax.csv
+               tax.json
+               README.md
+           ...
+           /RISK/
+               risk.csv
+               risk.json
+               README.md
+
+   Each domain folder SHALL contain at minimum:
+       - A CSV registry suitable for diffing
+       - A JSON registry suitable for machine consumption
+       - A README describing the domain’s purpose and ID conventions
+
+5.3 Master Index
+
+   The file /taxonomies/index.json SHALL enumerate all domain registries
+   and provide pointers to their canonical registry files. This file
+   enables automated discovery, indexing, and version tracking.
+
+6.  /governance/ Directory
+
+6.1 Purpose
+
+   The /governance/ directory SHALL contain project governance rules,
+   registrar procedures, change-control policies, and ontology
+   stewardship documents.
+
+6.2 Examples
+
+       registrar_rules.md
+       domain_change_policy.md
+       versioning_strategy.md
+       merging_guidelines.md
+
+   Governance documents SHALL define how taxonomies evolve, how IDs are
+   issued, and how stability is preserved over decades of operation.
+
+7.  /guides/ Directory
+
+7.1 Purpose
+
+   The /guides/ directory contains non-normative human-readable
+   materials, including implementer guides, tutorials, and examples.
+   These documents provide assistance but do not define system behavior.
+
+7.2 Examples
+
+       how_to_extend_taxonomies.md
+       envelope_examples.md
+       glossary.md
+
+8.  Optional Directories
+
+8.1 /scripts/
+
+   This directory contains maintenance utilities used solely
+   for repository upkeep (e.g., index generators, validators). These
+   scripts SHALL NOT contain application logic for runtime systems.
+
+8.2 /examples/
+
+   Contains example envelopes, taxonomy payloads, and sample
+   constructions for implementers.
+
+9.  Security Considerations
+
+   This document defines structural organization only and introduces no
+   new executable components. Incorrect adherence to the prescribed
+   structure MAY result in difficulty managing standards evolution or
+   preserving long-term archival consistency.
+
+10.  IANA Considerations
+
+   This document requests no IANA actions. The Wilbuns Namespace
+   Registry SHALL be maintained internally.
+
+11.  Author’s Address
+
+   N. A. Simpson  
+   Morningside Group  
+   Appomattox, Virginia
+

@@ -1,0 +1,281 @@
+               WILBUNS-1: Core Taxonomy Domains for the Wilbuns System
+                      Project Morningside / Constance Architecture
+                               Category: Standards Track
+                             Published: 22 November 2025
+
+
+Status of This Memo
+
+   This document specifies the foundational domain architecture for the
+   Wilbuns Taxonomy Normalization System ("Wilbuns"). Distribution of
+   this memo is unlimited. This is a Standards Track document.
+
+Abstract
+
+   WILBUNS-1 establishes the canonical set of taxonomy namespaces
+   ("domains") to be used across all Wilbuns-compliant systems,
+   including but not limited to Constance, GovSet, and derivative
+   municipal archival infrastructures. This document represents a
+   published fork in the road: a deliberative and opinionated ledger of
+   decisions made for the long-term health of the system, acknowledging
+   that some decisions, once taken, may prove irreversible or may have
+   unintended consequences akin to running trains on broken tracks,
+   attempting to un-neuter a K9, or collecting spilt milk with bare
+   hands. These decisions were made by the proper authority, as
+   indicated by signed commit by project author(s), in an effort to
+   increase system longevity and delay the effects of the Second Law of
+   Thermodynamics as applied to information entropy.
+
+1.  Introduction
+
+   The Wilbuns Taxonomy Normalization System provides stable, integer-
+   based identifiers for conceptual categories used in document
+   processing, entity resolution, and semantic normalization. This
+   specification defines the *domains* of the system: top-level,
+   immutable namespaces under which classification values are issued.
+
+   Domains defined herein SHALL be treated as permanent. Adding new
+   domains after publication of this memo requires substantial
+   refactoring and SHOULD NOT be attempted without a compelling,
+   civilization-scale mandate.
+
+   Each domain includes:
+       - A 3–5 character prefix
+       - A brief definition
+       - A two-sentence usage guide
+       - A representative example
+
+   Domains are listed alphabetically by prefix.
+
+2.  Domain Specifications
+
+2.1  ENT — Entities
+
+   Definition:
+     ENT includes people, organizations, facilities, parcels, addresses,
+     and any other persistent "thing" that can be pointed to.
+
+   Usage:
+     Use ENT whenever referencing a discrete, nameable unit that exists
+     as an actor or asset in government or public records. ENT values
+     SHOULD represent real-world entities and SHOULD remain stable over
+     time.
+
+   Example:
+     ENT:000492114  →  "Appomattox County High School"
+
+2.2  TAX — Classification
+
+   Definition:
+     TAX codes represent the controlled vocabulary for document types,
+     content genres, and categorical classification.
+
+   Usage:
+     Use TAX when assigning a conceptual or typological bucket to a
+     piece of content. TAX values SHOULD NOT represent entities or
+     events.
+
+   Example:
+     TAX:100315  →  "political_advertisement"
+
+2.3  ROUTE — Routing
+
+   Definition:
+     ROUTE values define routing rules, domain pathways, and system
+     classification flows.
+
+   Usage:
+     Use ROUTE to indicate how and where a record proceeds through a
+     system (e.g., elections → local_races). ROUTE MAY support workflow
+     automation engines.
+
+   Example:
+     ROUTE:300050  →  "local_races"
+
+2.4  SEM — Semantic Labels
+
+   Definition:
+     SEM values represent tone, audience, sentiment, or other semantic
+     interpretations inferred from a record.
+
+   Usage:
+     Use SEM when describing meaning, intent, or contextual semantics.
+     SEM labels SHOULD be applied by analysis rather than provided by
+     users.
+
+   Example:
+     SEM:500002  →  "public_outreach"
+
+2.5  KW — Keywords
+
+   Definition:
+     KW values represent unbounded, user- or machine-generated
+     freeform descriptors normalized into deterministic IDs.
+
+   Usage:
+     Use KW for concepts too granular or too numerous for TAX. KW MAY
+     contain synonyms or corpus-expansion terms.
+
+   Example:
+     KW:900014122  →  "campaign_flyer"
+
+2.6  CTRL — Document Control
+
+   Definition:
+     CTRL values identify retention classes, security tiers, access
+     restrictions, and archiving requirements.
+
+   Usage:
+     Use CTRL for FOIA sensitivity, retention schedules, or access
+     governance. CTRL SHOULD NOT describe content; it describes
+     handling.
+
+   Example:
+     CTRL:600010  →  "public_record_permanent_retention"
+
+2.7  GEO — Geography
+
+   Definition:
+     GEO values represent geographic divisions, boundaries, districts,
+     localities, coordinates, or spatial reference units.
+
+   Usage:
+     Use GEO whenever location is the primary classification dimension.
+     GEO SHOULD support hierarchical spatial structures.
+
+   Example:
+     GEO:400122  →  "Appomattox, Virginia"
+
+2.8  ML — Machine-Learning Features
+
+   Definition:
+     ML values indicate machine-learning model outputs, algorithmic
+     pathways, and analysis feature classifications.
+
+   Usage:
+     Use ML to annotate model-involved transformations or computational
+     classifications. ML SHOULD be applied programmatically.
+
+   Example:
+     ML:700045  →  "embedding_profile_text_layout_1"
+
+2.9  INF — Inference
+
+   Definition:
+     INF values document inferential conclusions, metadata deductions,
+     or algorithmic interpretations of record attributes.
+
+   Usage:
+     Use INF for "is_advertisement", "is_contact_card", or other
+     binary/semantic inferences. INF SHOULD NOT duplicate TAX or SEM.
+
+   Example:
+     INF:800010  →  "is_campaign_material"
+
+2.10 EVT — Events
+
+   Definition:
+     EVT values classify meetings, hearings, dispatches, incidents,
+     calls-for-service, ceremonies, or any temporally bound occurrence.
+
+   Usage:
+     Use EVT when the subject of classification is something that
+     *happened*, not something that *exists*. EVT SHALL be used for
+     public safety, civic meetings, and timeline reconstruction.
+
+   Example:
+     EVT:200044991  →  "Town_Council_Regular_Session"
+
+2.11 REL — Relationship Types
+
+   Definition:
+     REL values represent associative links between entities, events,
+     or records (e.g., membership, ownership, authorship).
+
+   Usage:
+     Use REL when describing the *type* of relationship between two
+     canonical objects. REL SHOULD be used as the predicate in graph-
+     structured data.
+
+   Example:
+     REL:210101  →  "employed_by"
+
+2.12 MEAS — Measurements / Metrics
+
+   Definition:
+     MEAS values represent measured variables, statistical categories,
+     and standardized quantitative units.
+
+   Usage:
+     Use MEAS when referencing KPIs, readings, counts, or standardized
+     measured attributes. MEAS SHOULD NOT contain raw numerical values.
+
+   Example:
+     MEAS:310021  →  "water_system_pressure_psi"
+
+2.13 LAW — Legal Authority / Statutory References
+
+   Definition:
+     LAW values represent citations to code sections, administrative
+     authorities, ordinances, and jurisdictional mandates.
+
+   Usage:
+     Use LAW when tying a record or classification to a legal basis.
+     LAW SHOULD refer to enduring legal references.
+
+   Example:
+     LAW:410011  →  "VA_Code_§15.2-1102"
+
+2.14 TEMP — Temporal Structures
+
+   Definition:
+     TEMP values represent fiscal periods, election cycles, academic
+     semesters, seasons, or other chronologically defined segments.
+
+   Usage:
+     Use TEMP when representing time as a classification, not as raw
+     metadata. TEMP SHOULD support coarse-to-fine granularity.
+
+   Example:
+     TEMP:510005  →  "FY2024"
+
+2.15 RISK — Risk / Compliance
+
+   Definition:
+     RISK values represent compliance flags, privacy indicators, safety
+     statuses, or regulatory risk classifications.
+
+   Usage:
+     Use RISK for FOIA-exempt categories, safety compliance markers,
+     and data-governance risk signals. RISK SHOULD inform CTRL but not
+     replace it.
+
+   Example:
+     RISK:910044  →  "contains_personal_information"
+
+3.  Security Considerations
+
+   This document defines namespaces only. It introduces no executable
+   code and therefore no computational vulnerabilities. However,
+   incorrect application of namespaces MAY result in semantic drift,
+   ontological corruption, or long-term archival disorder. Implementers
+   SHOULD exercise reasonable care and SHOULD resist the temptation to
+   create new domains during moments of institutional panic.
+
+4.  IANA Considerations
+
+   No new registries are requested at this time. The Wilbuns Namespace
+   Registry SHALL be maintained by the project authority.
+
+5.  Acknowledgments
+
+   The author acknowledges the inevitability of entropy, the permanence
+   of metadata, and the impossibility of reversing certain decisions
+   once deployed in production.
+
+6.  Author’s Address
+
+   N. A. Simpson  
+   Morningside Group  
+   Appomattox, Virginia
+
