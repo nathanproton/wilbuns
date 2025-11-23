@@ -1,0 +1,195 @@
+                   WILBUNS-5: Entity Alias Resolution Standard
+                 Project Morningside / Constance Architecture
+                              Category: Standards Track
+                              Published: 22 November 2025
+
+
+Status of This Memo
+
+   This document specifies the alias-resolution procedures for the
+   Wilbuns Taxonomy Normalization System (“Wilbuns”). It defines the
+   requirements for handling non-canonical entity mappings, contextual
+   alias determination, submission of new canonical entities, and
+   evidence obligations. Distribution of this memo is unlimited.
+
+Abstract
+
+   WILBUNS-5 establishes the authoritative process by which applications
+   MAY perform local alias resolution and tentative entity mapping, while
+   ensuring that canonical entity assignments remain stable, curated, and
+   fully governed. This document clarifies that non-canonical mappings,
+   including potential aliases, ambiguous matches, and proposed new
+   entities, SHALL be implemented and tracked at the application level,
+   and SHALL NOT modify the Wilbuns canonical entity registry unless
+   submitted with justification and deterministic evidentiary support.
+   Such evidence includes, but is not limited to, notability guidelines
+   comparable to Wikipedia standards for natural persons, EIN or state-
+   issued identifiers for corporate entities, and analogous authoritative
+   references. As with prior Wilbuns standards, implementers are reminded
+   that attempting to reverse poor entity merges often resembles running
+   a locomotive on fractured track, un-neutering a K9, or reconstituting
+   spilt milk: arduous, inadvisable, and rarely successful.
+
+1.  Introduction
+
+   Wilbuns assigns canonical identifiers (e.g., ENT:000492114) to
+   entities including people, organizations, facilities, parcels,
+   places, and related objects. Because real-world data contains
+   abundant variation in names, spellings, abbreviations, and
+   ambiguous forms, applications MUST perform alias evaluation,
+   contextual disambiguation, and probabilistic matching when
+   processing documents.
+
+   This standard defines:
+
+       (1) The difference between canonical and non-canonical entity
+           representations.
+
+       (2) Requirements for local (application-level) alias tracking.
+
+       (3) Rules for proposing new canonical entities or confirmed
+           aliases into the Wilbuns registry.
+
+       (4) The evidentiary standard for acceptance.
+
+   Canonical entries are managed centrally; aliases and tentative
+   matches are managed locally unless formally submitted and approved.
+
+2.  Canonical Entities
+
+2.1 Definition
+
+   A canonical entity is a single, authoritative entry in the Wilbuns
+   ENT domain representing a real-world person, organization, place, or
+   other identity-bearing object. Canonical entities MUST have:
+
+       - A stable Wilbuns ID (ENT:<number>)
+       - A definitive human-readable name
+       - Supporting metadata and descriptive text
+       - Evidence sufficient to justify permanent inclusion
+
+2.2 Immutability
+
+   Canonical entity records SHALL be treated as permanent archival
+   entries. Changes to name, description, or associated metadata SHALL
+   follow the governance procedures defined in WILBUNS-4 and SHALL NOT
+   be performed automatically by downstream systems.
+
+3.  Non-Canonical Entities and Aliases
+
+3.1 Definition
+
+   A non-canonical entity refers to any form or string that resembles an
+   entity name but does not yet meet the requirements for canonical
+   inclusion. Examples include:
+
+       - Partial names (e.g., “Abbitt”)
+       - Variant spellings (e.g., “W. M. Abbitt Jr.”)
+       - Abbreviations (e.g., “W. Abbitt”)
+       - Machine-generated candidates from OCR
+       - Mistyped or noisy strings
+
+3.2 Contextual Aliases
+
+   Applications MAY treat a non-canonical form as an alias of a known
+   canonical entity if contextual signals (e.g., geography, document
+   type, temporal proximity) provide sufficiently high confidence.
+
+   Applications MUST track local resolution decisions and associated
+   signals but MUST NOT write or promote contextual aliases into the
+   canonical registry without a formal submission.
+
+4.  Application-Level Alias Tracking
+
+   Implementations MUST:
+
+       - Maintain a local alias table to store possible matches.
+       - Store probability scores, evidence, and contextual cues.
+       - Avoid writing these entries into Wilbuns canonical space.
+       - Ensure reversibility when new information appears.
+
+   A local alias mapping MAY be used for processing and inference but
+   SHALL NOT be treated as authoritative across systems.
+
+5.  Submitting New Canonical Entities or Permanent Aliases
+
+5.1 Submission Requirement
+
+   When an application determines that a non-canonical alias SHOULD
+   become a canonical Wilbuns entity or SHOULD be permanently bound as an
+   official alias of an existing Wilbuns entity, the implementation MUST
+   submit a request to the Wilbuns governance process.
+
+   Each submission MUST include:
+
+       - Proposed canonical label
+       - Evidence supporting identity or equivalence
+       - Contextual match logs
+       - Deterministic matching factors
+       - Source citations
+
+5.2 Evidence Standards
+
+   The following evidence SHALL be considered sufficient:
+
+       - **Natural persons:** Documentation comparable to Wikipedia
+         notability guidelines (public office, publications, verifiable
+         biography, public records, etc.)
+
+       - **Corporate entities:** EIN, state corporation commission ID,
+         statutory registration, or publicly verifiable corporate record.
+
+       - **Government units:** State code references, municipal
+         charters, or authoritative mapping to recognized jurisdictions.
+
+       - **Facilities/locations:** GIS authority datasets, postal
+         records, or government facility registries.
+
+   Weak, unverifiable, or ambiguous evidence SHALL NOT be accepted.
+
+5.3 Deterministic Match Evidence
+
+   Submissions MUST provide deterministic evidence, such as:
+
+       - Textual match thresholds
+       - Named entity confidence scores
+       - Geographic consistency
+       - Document topology consistency
+       - Historical continuity (e.g., an official known to serve a
+         region appearing in records from that region)
+
+   Submissions lacking such evidence MAY be rejected or deferred.
+
+6.  Alias Resolution Workflow
+
+   Applications SHOULD follow this workflow:
+
+       1. Extract candidate names or strings.
+       2. Perform probabilistic alias matching.
+       3. Apply contextual filters (geography, domain, time).
+       4. Select the highest-confidence canonical match.
+       5. Store the result locally with supporting signals.
+       6. Optionally submit confirmed aliases to Wilbuns authority.
+
+   Applications MUST retain the possibility of reversal until the
+   alias or new entity is formally accepted into the canonical registry.
+
+7.  Security Considerations
+
+   Misidentification of persons or organizations can result in
+   incorrect linkage of records, denial of rights, reputational harm,
+   or archival corruption. Alias resolution MUST be conservative,
+   reversible, and thoroughly documented. Implementers SHOULD exercise
+   care equivalent to handling legal identity documents.
+
+8.  IANA Considerations
+
+   This document requests no actions from IANA. The Wilbuns Entity
+   Registry SHALL be maintained internally.
+
+9.  Author’s Address
+
+   N. A. Simpson  
+   Morningside Group  
+   Appomattox, Virginia
+

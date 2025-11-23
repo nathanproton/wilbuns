@@ -1,0 +1,23 @@
+{
+    "entity_id": "ENT:910000001",
+    "entity_name": "Morningside Group LLC",
+    "entity_type": "company",
+    "jurisdiction": "Virginia, USA",
+    "entity_url": "https://morningsidehq.com",
+    "admission_date": "2025-11-22",
+    "poc_name": "N. A. Simpson",
+    "poc_email": "nsimpson@morningsidehq.com",
+    "status": "active",
+    "authorized_scopes": [
+      "canonical-write",
+      "statutory-depository",
+      "commercial-use"
+    ],
+    "external_ids": {
+      "EIN": "82-3400360",
+      "SCC_ID": "TBD"
+    },
+    "reason_for_admission": "Founding steward of Wilbuns taxonomy system.",
+    "public_key": null
+  }
+  

@@ -1,0 +1,16 @@
+[
+  {
+    "entity_name": "Morningside Group LLC",
+    "entity_id": "ENT:910000001",
+    "application_name": "wilbuns-api-service",
+    "application_id": "APP:100001",
+    "entity_application_id": "AEID:900001",
+    "admission_date": "2025-11-22",
+    "authorization_scope": [
+      "canonical-write",
+      "envelope-write",
+      "commercial-use",
+      "statutory-depository"
+    ]
+  }
+]

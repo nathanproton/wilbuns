@@ -1,0 +1,279 @@
+                 WILBUNS-6: Authorized Entity-Application Registry
+                 Project Morningside / Constance Architecture
+                              Category: Standards Track
+                              Published: 22 November 2025
+
+
+Status of This Memo
+
+   This document defines the Wilbuns Authorized Entity-Application
+   Registry (AEAR), hereafter referred to as “the Registrar.” The
+   Registrar provides a formally governed namespace for identifying,
+   authorizing, and managing the entities and software applications
+   permitted to issue Wilbuns-compliant envelopes, submit canonical
+   taxonomy proposals, and participate in standards-governed
+   environments, including government, statutory depository, and life-
+   safety contexts. Distribution of this memo is unlimited.
+
+Abstract
+
+   WILBUNS-6 establishes the rules, formats, and governance mechanisms
+   for the Authorized Entity-Application Registry. The Registrar assigns
+   unique Entity-Application Identifiers (AEIDs), records metadata
+   associated with participating organizations and applications, and
+   defines the permissions associated with each AEID. Only registered
+   AEIDs are authorized to (1) generate Wilbuns-compliant envelopes, (2)
+   submit canonical ID, alias, or taxonomy proposals, or (3) operate in
+   regulated environments. Applications MAY maintain private alias
+   resolution or local taxonomy extensions under their assigned AEID, but
+   SHALL NOT modify the canonical Wilbuns taxonomies without formal
+   submission. As with prior Wilbuns standards, this document accepts
+   that inappropriate authorization or misallocation of AEIDs may prove
+   difficult or impossible to reverse—akin to running railcars upon
+   broken track, attempting to un-neuter a K9, or reconstituting spilt
+   milk after the bottle has shattered.
+
+1.  Introduction
+
+   The Wilbuns taxonomy ecosystem requires a mechanism to identify and
+   authenticate the organizations and applications permitted to
+   participate in canonical ID issuance and standards-governed
+   operations. The purpose of the Authorized Entity-Application Registry
+   is threefold:
+
+       (1) Identify and authorize trusted entities and applications.
+       (2) Provide a permanent, auditable registry of participants.
+       (3) Enable per-application namespaces for local alias and taxonomy
+           management without polluting the canonical spaces.
+
+   The AEAR ensures that only vetted, reviewable participants may
+   contribute to canonical taxonomies or generate envelopes used in
+   regulatory, statutory, archival, or life-safety environments.
+
+2.  Definitions
+
+2.1 Entity
+
+   A legal or natural person (e.g., Morningside Group LLC, a government
+   agency, or an accredited archival institution). Entities MUST be
+   unique and SHALL be assigned an Entity ID (ENT entry), separate from
+   any AEID.
+
+2.2 Application
+
+   A software system operated by an Entity. Applications MUST have a
+   distinct name and SHALL be assigned an Application ID.
+
+2.3 AEID (Entity-Application Identifier)
+
+   A unique identifier representing a specific authorized application
+   operated by a specific entity. Format:
+
+       AEID:<number>
+
+   Each AEID is globally unique and SHALL NOT be reassigned.
+
+
+3.  The Entity Index (`entities_index.json`)
+
+3.1 Purpose
+
+   The `entities_index.json` file SHALL provide an authoritative,
+   machine-readable registry of all entities recognized by the Wilbuns
+   standards body. This registry is distinct from `registrar.json`, which
+   governs entity-application pairs. The entity index provides the
+   metadata foundation necessary for admissions, auditing, provenance,
+   and canonical decision-making.
+
+3.2 File Location
+
+       /registrar/entities_index.json
+
+   A JSON Schema SHOULD be provided at:
+
+       /registrar/entities.schema.json
+
+3.3 Required Fields
+
+   Each entry in `entities_index.json` MUST contain:
+
+       - entity_id (canonical ENT ID)
+       - entity_name
+       - entity_type (“company”, “government”, “individual”, etc.)
+       - admission_date (ISO 8601)
+       - jurisdiction
+       - status (“active”, “revoked”, “suspended”)
+
+   Recommended additional fields:
+
+       - entity_url
+       - poc_name (point of contact)
+       - poc_email
+       - authorized_scopes (entity-level)
+       - external_ids (EIN, SCC-ID, LEI, etc.)
+       - reason_for_admission
+       - public_key (optional for future signature systems)
+
+3.4 Normative Usage
+
+   Entries in `entities_index.json` represent entities authorized to
+   operate Wilbuns-compliant applications or submit canonical updates.
+   Applications MUST NOT treat entries in this index as canonical entity
+   definitions; only ENT-domain entries qualify as canonical entities.
+
+   The entity index SHALL serve as a cross-reference for AEID allocation,
+   eligibility review, and canonical submission auditing.
+
+3.5 Immutability
+
+   Entity index entries SHALL NOT be removed. Revoked or inactive
+   entities MUST remain listed with updated status fields.
+   
+4.  Registrar Structure
+
+   The Registrar SHALL be stored at:
+
+       /registrar/registrar.json
+
+   along with a JSON Schema located at:
+
+       /registrar/registrar.schema.json
+
+   Implementations MUST use this file to determine authorization status.
+
+4.1 Registrar JSON Format
+
+   Each entry SHALL contain:
+
+       - entity_name
+       - entity_id (canonical ENT ID)
+       - application_name
+       - application_id (APP prefix)
+       - entity_application_id (AEID)
+       - admission_date (ISO8601)
+       - authorization_scope (array)
+       - contact (optional)
+       - public_key (optional for signing)
+
+   The file SHALL contain an array of such records.
+
+5.  Authorization Scope
+
+   Each AEID SHALL have one or more of the following scopes:
+
+       - envelope-write
+       - canonical-write
+       - alias-submit
+       - taxonomy-proposal
+       - statutory-depository
+       - commercial-use
+       - research-only
+       - life-safety
+
+   The Registrar MAY define additional scopes through future standards.
+
+6.  AEID Allocation
+
+6.1 Assignment
+
+   AEIDs SHALL be assigned sequentially from a dedicated range:
+
+       AEID:900000 – AEID:999999
+
+   The Registrar MUST ensure no collision or duplication occurs.
+
+6.2 Immutability
+
+   Once assigned, an AEID SHALL remain permanently associated with the
+   entity-application pair. Revocation SHALL mark the AEID inactive but
+   SHALL NOT reuse its numeric value.
+
+7.  Local Namespaces for AEIDs
+
+7.1 Local Aliases
+
+   Authorized applications MAY create local alias resolution tables
+   stored at:
+
+       /applications/AEID-<number>/aliases/
+
+   These aliases MUST NOT be considered canonical. They MAY be used
+   internally or for envelope processing.
+
+7.2 Local Taxonomy Extensions
+
+   Applications MAY maintain local taxonomy supplements at:
+
+       /applications/AEID-<number>/local_taxonomies/
+
+   These MAY include internal labels, experimental categories, or pre-
+   normalized values. Such terms SHALL NOT enter the canonical Wilbuns
+   taxonomies without formal submission and approval.
+
+7.3 Local Metadata
+
+   Metadata associated with AEID operations SHOULD be stored at:
+
+       /applications/AEID-<number>/metadata/
+
+8.  Submitting Canonical Proposals
+
+8.1 Eligibility
+
+   Only AEIDs with “canonical-write” or “taxonomy-proposal” scope MAY
+   submit:
+
+       - new canonical entity proposals
+       - canonical alias proposals
+       - new taxonomy values
+       - structural changes (subject to governance review)
+
+8.2 Evidence Requirement
+
+   Submissions MUST include the deterministic match evidence and
+   justification described in WILBUNS-5, including:
+
+       - notability criteria for natural persons
+       - EIN, state ID, or equivalent for organizations
+       - statutory authority for government units
+       - GIS or facility registry entries for locations
+
+8.3 Review and Decision
+
+   The Registrar SHALL publish review guidelines under /governance/.
+
+   Accepted entries SHALL be added to canonical registries through
+   versioned updates. Rejected entries MAY be resubmitted with additional
+   evidence.
+
+9.  Revocation and Sanctions
+
+   The Registrar MAY suspend or revoke AEIDs that:
+
+       - submit fraudulent or misleading proposals
+       - repeatedly violate Wilbuns standards
+       - generate non-compliant envelopes in regulated contexts
+
+   Revoked AEIDs SHALL remain in registrar.json with “active: false”.
+
+   
+
+10.  Security Considerations
+
+   AEID misuse can compromise the integrity of canonical taxonomies,
+   produce misleading historical records, or affect life-safety
+   applications. Implementers MUST ensure strong operational security and
+   SHOULD use cryptographic signatures when submitting canonical changes
+   (to be specified in a future standard).
+
+11.  IANA Considerations
+
+   This document requests no IANA actions. The Wilbuns Registrar SHALL
+   be maintained internally.
+
+12.  Author's Address
+
+   N. A. Simpson  
+   Morningside Group  
+   Appomattox, Virginia
+
